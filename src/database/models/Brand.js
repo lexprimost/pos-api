@@ -1,8 +1,7 @@
 // External Dependancies
-const mongoose = require('mongoose')
+import { model, Schema, Types } from "mongoose"
 
-
-const brandSchema = new mongoose.Schema({
+const brandSchema = new Schema({
 
     name: String,
     countryOfBrand: String,
@@ -12,4 +11,4 @@ const brandSchema = new mongoose.Schema({
     timestamps:true
 })
 
-module.exports = mongoose.model('Brand', brandSchema)
+export default model('Brand', brandSchema)

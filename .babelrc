@@ -1,0 +1,24 @@
+{
+    "presets": [
+        ["@babel/preset-env", {
+            "useBuiltIns": "usage",
+            "corejs": "2"
+        }]
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-export-default-from",
+        ["module-resolver", {
+            "root": ["./src"],
+            "alias": {
+                "configurations": "./src/config",
+                "controllers": "./src/controllers",
+                "middlewares": "./src/middlewares",
+                "models": "./src/models",
+                "routes": "./src/routes",
+                "utils": "./src/utils",
+                "services": "./src/services",
+                "validations": "./src/validations"
+            }
+        }]
+    ]
+}

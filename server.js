@@ -1,7 +1,7 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const dbConnexion = require('./src/database/connection');
-const cors = require('cors');
+import express from "express"
+import dotenv from "dotenv"
+import dbConnexion from "./src/database/connection"
+import cors from "cors"
 
 //dotenv package initialization
 dotenv.config();
@@ -21,6 +21,7 @@ app.use(express.urlencoded({extended:true}));
 //use port defined in .env files or 3000 if not defined in the .env file
 const PORT = process.env.PORT || 3000;
 
+app.use('/images', express.static('images'));
 app.use('/api/v1/product', require('./src/routes/productsRoutes'));
 
 app.get('/', (req, resp, next) => {

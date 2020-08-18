@@ -1,7 +1,7 @@
 // External Dependancies
-const mongoose = require('mongoose')
+import { model, Schema, Types } from "mongoose"
 
-const cartSchema = new mongoose.Schema({
+const cartSchema = new Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     status: String,
     brand: String,
@@ -15,4 +15,4 @@ const cartSchema = new mongoose.Schema({
     timestamps:true
 })
 
-module.exports = mongoose.model('Cart', carSchema)
+export default model('Cart', carSchema)

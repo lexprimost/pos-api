@@ -1,41 +1,65 @@
 // External Dependancies
-const mongoose = require('mongoose')
-const variant = new mongoose.Schema({
-    code: String,
-    width: String,
-    length: String,
-    size: {
-        sizeCode: Map,
-        name: String
-    }
-});
-const productSchema = new mongoose.Schema({
+import { model, Schema, Types, plugin } from "mongoose"
+ 
+import slug from "mongoose-slug-generator";
+
+ plugin(slug);
+
+import {Attachment} from "./Attachment"
+
+
+const attributes = new Schema({
+    slug: String,
+    name: String, //color //size
+    value: [String] //blue, red, black- xl , xs
+})
+const variant = new  Schema({
+    sku: String, //shirt_red_xl
+    productId: {
+        type: Types.ObjectId,//references the main product
+        ref: 'Product'
+    },
+    attributes: [attributes],// [{color:'red"},{size:'xl'}]
+    thumbnail: String,
+    description: String,
+    price: Number
+})
+const productSchema = new Schema({
     sku: String,
-    barcode: Number,
+    barcode: Number, 
+    slug: { type: String, slug: ["name"], unique: true },
     name: String,
     description: String,
-    brand_id: mongoose.Schema.Types.ObjectId,
+    brand_id: {
+        type:  Types.ObjectId,
+        ref: 'Brand'
+    },
     productTypeName: String, //T-shirt
     descriptiveLenght: [String],
     customerGroup: [String], //"Men, "Women","Boys"
+    gallery:[
+        {
+            type: Types.ObjectId,
+            ref: 'Attachment'
+        }
+    ],
     imgGallery: [String],
-    imgUrl: String,
+    productImageUrl: String,
     tags: [String],
     ageGender: String, //"Younger childBoy"
     countryOfProduction: String,
     price: Number,
-    pricing: {
-        type: Map,
-        of: String
-    },
     quantity: Number, //netQuantity: Number,
-    categories: [mongoose.Schema.Types.ObjectId],
+    categories: [{
+        type: Types.ObjectId,
+        ref: 'Category'
+    }],
     mainCategory: String,
     color: String,
     colorDescription: String,
     inStock: Boolean,
     productUrl: String,
-    styles: [String],
+    styles: [String],//designer, casual
     newProduct: {
         type: Boolean,
         default: false
@@ -44,28 +68,14 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }, //newArrival: true,
-    variantsList: [{
-        code: String,
-        width: String,
-        length: String,
-        size: {
-            sizeCode: String,
-            name: String,
-            sizeScaleCode: String,
-            sizeScaleDescription: String,
-            sizeOrder: Number,
-            sizeFilter: String,
-            market: String
-        }
-    }], //taille
+    variantsList: [variant], //taille
     selectedColor: String,
-    articleList: [mongoose.Schema.Types.ObjectId]
 
-},{
-    timestamps:true,
-    toObject:{
-        transform: (doc, ret, options)=>{
-            ret.id=ret._id;
+}, {
+    timestamps: true,
+    toObject: {
+        transform: (doc, ret, options) => {
+            ret.id = ret._id;
             delete ret._id;
             delete ret.__v;
             return ret;
@@ -73,4 +83,4 @@ const productSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Product', productSchema)
+export default model('Product', productSchema)
