@@ -22,11 +22,11 @@ exports.addProduct = async (req, res) => {
     return res.status(response.status).send(response);
 }
 
-exports.addProduct = async (req, res) => {
-    console.log("priint ",req.file.path);
+/* exports.addProduct = async (req, res) => {
+    console.log("priint ");
     
     let response = { ...constants.defaultServerResponse };
-    const product = {...req.body, productImageUrl:req.file.path}
+    const product = {...req.body}
     console.log("======= ", product);
     try {
         const responseFromService = await productService.addProduct(product);
@@ -42,7 +42,7 @@ exports.addProduct = async (req, res) => {
     }
     return res.status(response.status).send(response);
 }
-
+ */
 //Add Multiple product controller
 exports.addMultipleProduct = async (req, res) => {
     let response = { ...constants.defaultServerResponse };

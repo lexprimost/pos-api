@@ -86,58 +86,75 @@ exports.addProduct = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+/* exports.addProduct = async (req, res) => {
+    console.log("priint ");
+    
+    let response = { ...constants.defaultServerResponse };
+    const product = {...req.body}
+    console.log("======= ", product);
+    try {
+        const responseFromService = await productService.addProduct(product);
+        //const responseFromService = await productService.addProduct(req.body, req.file.path);
+        //server response
+        response.status = 200;
+        response.message = constants.productMessage.PRODUCT_CREATED;
+        response.body = responseFromService;
 
-exports.addProduct = /*#__PURE__*/function () {
+    } catch (error) {
+        console.log('something went wrong: Controller: createProduct ', error);
+        response.message = error.message;
+    }
+    return res.status(response.status).send(response);
+}
+ */
+//Add Multiple product controller
+
+
+exports.addMultipleProduct = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res) {
-    var response, product, responseFromService;
+    var response, responseFromService;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            console.log("priint ", req.file.path);
             response = _objectSpread({}, _constants["default"].defaultServerResponse);
-            product = _objectSpread(_objectSpread({}, req.body), {}, {
-              productImageUrl: req.file.path
-            });
-            console.log("======= ", product);
-            _context2.prev = 4;
-            _context2.next = 7;
-            return _productServices["default"].addProduct(product);
+            _context2.prev = 1;
+            _context2.next = 4;
+            return _productServices["default"].addMultipleProduct(req.body);
 
-          case 7:
+          case 4:
             responseFromService = _context2.sent;
-            //const responseFromService = await productService.addProduct(req.body, req.file.path);
             //server response
             response.status = 200;
             response.message = _constants["default"].productMessage.PRODUCT_CREATED;
             response.body = responseFromService;
-            _context2.next = 17;
+            _context2.next = 14;
             break;
 
-          case 13:
-            _context2.prev = 13;
-            _context2.t0 = _context2["catch"](4);
+          case 10:
+            _context2.prev = 10;
+            _context2.t0 = _context2["catch"](1);
             console.log('something went wrong: Controller: createProduct ', _context2.t0);
             response.message = _context2.t0.message;
 
-          case 17:
+          case 14:
             return _context2.abrupt("return", res.status(response.status).send(response));
 
-          case 18:
+          case 15:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[4, 13]]);
+    }, _callee2, null, [[1, 10]]);
   }));
 
   return function (_x3, _x4) {
     return _ref2.apply(this, arguments);
   };
-}(); //Add Multiple product controller
+}(); // Get all products
 
 
-exports.addMultipleProduct = /*#__PURE__*/function () {
+exports.getProducts = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(req, res) {
     var response, responseFromService;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -147,41 +164,42 @@ exports.addMultipleProduct = /*#__PURE__*/function () {
             response = _objectSpread({}, _constants["default"].defaultServerResponse);
             _context3.prev = 1;
             _context3.next = 4;
-            return _productServices["default"].addMultipleProduct(req.body);
+            return _productServices["default"].getProducts(req.query);
 
           case 4:
             responseFromService = _context3.sent;
             //server response
             response.status = 200;
-            response.message = _constants["default"].productMessage.PRODUCT_CREATED;
+            response.count = responseFromService.length;
+            response.message = responseFromService.length > 1 ? _constants["default"].productMessage.PRODUCTS_FETCHED : _constants["default"].productMessage.PRODUCT_FETCHED;
             response.body = responseFromService;
-            _context3.next = 14;
+            _context3.next = 15;
             break;
 
-          case 10:
-            _context3.prev = 10;
+          case 11:
+            _context3.prev = 11;
             _context3.t0 = _context3["catch"](1);
-            console.log('something went wrong: Controller: createProduct ', _context3.t0);
+            console.log('something went wrong: Controller: getProducts ', _context3.t0);
             response.message = _context3.t0.message;
 
-          case 14:
+          case 15:
             return _context3.abrupt("return", res.status(response.status).send(response));
 
-          case 15:
+          case 16:
           case "end":
             return _context3.stop();
         }
       }
-    }, _callee3, null, [[1, 10]]);
+    }, _callee3, null, [[1, 11]]);
   }));
 
   return function (_x5, _x6) {
     return _ref3.apply(this, arguments);
   };
-}(); // Get all products
+}(); // Get product by id
 
 
-exports.getProducts = /*#__PURE__*/function () {
+exports.getProductById = /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(req, res) {
     var response, responseFromService;
     return regeneratorRuntime.wrap(function _callee4$(_context4) {
@@ -191,42 +209,41 @@ exports.getProducts = /*#__PURE__*/function () {
             response = _objectSpread({}, _constants["default"].defaultServerResponse);
             _context4.prev = 1;
             _context4.next = 4;
-            return _productServices["default"].getProducts(req.query);
+            return _productServices["default"].getProductById(req.params);
 
           case 4:
             responseFromService = _context4.sent;
             //server response
             response.status = 200;
-            response.count = responseFromService.length;
-            response.message = responseFromService.length > 1 ? _constants["default"].productMessage.PRODUCTS_FETCHED : _constants["default"].productMessage.PRODUCT_FETCHED;
+            response.message = _constants["default"].productMessage.PRODUCTS_FETCHED;
             response.body = responseFromService;
-            _context4.next = 15;
+            _context4.next = 14;
             break;
 
-          case 11:
-            _context4.prev = 11;
+          case 10:
+            _context4.prev = 10;
             _context4.t0 = _context4["catch"](1);
-            console.log('something went wrong: Controller: getProducts ', _context4.t0);
+            console.log('something went wrong: Controller: getProductById ', _context4.t0);
             response.message = _context4.t0.message;
 
-          case 15:
+          case 14:
             return _context4.abrupt("return", res.status(response.status).send(response));
 
-          case 16:
+          case 15:
           case "end":
             return _context4.stop();
         }
       }
-    }, _callee4, null, [[1, 11]]);
+    }, _callee4, null, [[1, 10]]);
   }));
 
   return function (_x7, _x8) {
     return _ref4.apply(this, arguments);
   };
-}(); // Get product by id
+}(); // Get product by code
 
 
-exports.getProductById = /*#__PURE__*/function () {
+exports.getProductBySlug = /*#__PURE__*/function () {
   var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(req, res) {
     var response, responseFromService;
     return regeneratorRuntime.wrap(function _callee5$(_context5) {
@@ -236,7 +253,7 @@ exports.getProductById = /*#__PURE__*/function () {
             response = _objectSpread({}, _constants["default"].defaultServerResponse);
             _context5.prev = 1;
             _context5.next = 4;
-            return _productServices["default"].getProductById(req.params);
+            return _productServices["default"].getProductBySlug(req.params);
 
           case 4:
             responseFromService = _context5.sent;
@@ -250,7 +267,7 @@ exports.getProductById = /*#__PURE__*/function () {
           case 10:
             _context5.prev = 10;
             _context5.t0 = _context5["catch"](1);
-            console.log('something went wrong: Controller: getProductById ', _context5.t0);
+            console.log('something went wrong: Controller: getProductByBarcode ', _context5.t0);
             response.message = _context5.t0.message;
 
           case 14:
@@ -270,7 +287,7 @@ exports.getProductById = /*#__PURE__*/function () {
 }(); // Get product by code
 
 
-exports.getProductBySlug = /*#__PURE__*/function () {
+exports.getProductByBarcode = /*#__PURE__*/function () {
   var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(req, res) {
     var response, responseFromService;
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
@@ -280,7 +297,7 @@ exports.getProductBySlug = /*#__PURE__*/function () {
             response = _objectSpread({}, _constants["default"].defaultServerResponse);
             _context6.prev = 1;
             _context6.next = 4;
-            return _productServices["default"].getProductBySlug(req.params);
+            return _productServices["default"].getProductByBarcode(req.params);
 
           case 4:
             responseFromService = _context6.sent;
@@ -311,10 +328,10 @@ exports.getProductBySlug = /*#__PURE__*/function () {
   return function (_x11, _x12) {
     return _ref6.apply(this, arguments);
   };
-}(); // Get product by code
+}(); // update product
 
 
-exports.getProductByBarcode = /*#__PURE__*/function () {
+module.exports.updateProduct = /*#__PURE__*/function () {
   var _ref7 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7(req, res) {
     var response, responseFromService;
     return regeneratorRuntime.wrap(function _callee7$(_context7) {
@@ -324,13 +341,13 @@ exports.getProductByBarcode = /*#__PURE__*/function () {
             response = _objectSpread({}, _constants["default"].defaultServerResponse);
             _context7.prev = 1;
             _context7.next = 4;
-            return _productServices["default"].getProductByBarcode(req.params);
+            return _productServices["default"].updateProduct(req.params, req.body);
 
           case 4:
             responseFromService = _context7.sent;
             //server response
             response.status = 200;
-            response.message = _constants["default"].productMessage.PRODUCTS_FETCHED;
+            response.message = _constants["default"].productMessage.PRODUCT_UPDATED;
             response.body = responseFromService;
             _context7.next = 14;
             break;
@@ -338,7 +355,7 @@ exports.getProductByBarcode = /*#__PURE__*/function () {
           case 10:
             _context7.prev = 10;
             _context7.t0 = _context7["catch"](1);
-            console.log('something went wrong: Controller: getProductByBarcode ', _context7.t0);
+            console.log('something went wrong: Controller: updateProduct ', _context7.t0);
             response.message = _context7.t0.message;
 
           case 14:
@@ -355,10 +372,10 @@ exports.getProductByBarcode = /*#__PURE__*/function () {
   return function (_x13, _x14) {
     return _ref7.apply(this, arguments);
   };
-}(); // update product
+}(); // delete product
 
 
-module.exports.updateProduct = /*#__PURE__*/function () {
+module.exports.deleteProduct = /*#__PURE__*/function () {
   var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee8(req, res) {
     var response, responseFromService;
     return regeneratorRuntime.wrap(function _callee8$(_context8) {
@@ -368,13 +385,13 @@ module.exports.updateProduct = /*#__PURE__*/function () {
             response = _objectSpread({}, _constants["default"].defaultServerResponse);
             _context8.prev = 1;
             _context8.next = 4;
-            return _productServices["default"].updateProduct(req.params, req.body);
+            return _productServices["default"].deleteProduct(req.params);
 
           case 4:
             responseFromService = _context8.sent;
             //server response
             response.status = 200;
-            response.message = _constants["default"].productMessage.PRODUCT_UPDATED;
+            response.message = _constants["default"].productMessage.PRODUCT_DELETED;
             response.body = responseFromService;
             _context8.next = 14;
             break;
@@ -398,49 +415,5 @@ module.exports.updateProduct = /*#__PURE__*/function () {
 
   return function (_x15, _x16) {
     return _ref8.apply(this, arguments);
-  };
-}(); // delete product
-
-
-module.exports.deleteProduct = /*#__PURE__*/function () {
-  var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee9(req, res) {
-    var response, responseFromService;
-    return regeneratorRuntime.wrap(function _callee9$(_context9) {
-      while (1) {
-        switch (_context9.prev = _context9.next) {
-          case 0:
-            response = _objectSpread({}, _constants["default"].defaultServerResponse);
-            _context9.prev = 1;
-            _context9.next = 4;
-            return _productServices["default"].deleteProduct(req.params);
-
-          case 4:
-            responseFromService = _context9.sent;
-            //server response
-            response.status = 200;
-            response.message = _constants["default"].productMessage.PRODUCT_DELETED;
-            response.body = responseFromService;
-            _context9.next = 14;
-            break;
-
-          case 10:
-            _context9.prev = 10;
-            _context9.t0 = _context9["catch"](1);
-            console.log('something went wrong: Controller: updateProduct ', _context9.t0);
-            response.message = _context9.t0.message;
-
-          case 14:
-            return _context9.abrupt("return", res.status(response.status).send(response));
-
-          case 15:
-          case "end":
-            return _context9.stop();
-        }
-      }
-    }, _callee9, null, [[1, 10]]);
-  }));
-
-  return function (_x17, _x18) {
-    return _ref9.apply(this, arguments);
   };
 }();
