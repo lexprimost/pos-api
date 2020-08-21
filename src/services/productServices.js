@@ -5,11 +5,26 @@ import constants from "../constants"
 
 
 // Add products
-exports.addProduct = async (serviceData) => {
+exports.addProduct = async (serviceData,imgPath) => {
 
     try {
-        let product = new Product({ ...serviceData });
-        console.log({ ...serviceData});
+        let product = new Product({ ...serviceData,"productImageUrl":imgPath });
+        console.log('what ' ,{ ...serviceData});
+        
+        const result = await product.save();
+        return formatMongoData(result);
+    } catch (error) {
+        console.log('something went wrong: Service: CreateProduct ', error)
+        throw new Error(error);
+    }
+}
+
+// Add product without image
+exports.addProductWithoutImage = async (serviceData,imgPath) => {
+
+    try {
+        let product = new Product({ ...serviceData});
+        console.log('what ' ,{ ...serviceData});
         
         const result = await product.save();
         return formatMongoData(result);
