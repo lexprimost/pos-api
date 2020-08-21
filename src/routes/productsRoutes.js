@@ -4,12 +4,15 @@ const router = express.Router();
 import joiSchemaValidation from "../middleware/joiSchemaValidation"
 import productControllers from "../controllers/productControllers"
 import productApiSchema from "../apiSchemas/productApiSchema"
+import fs from 'fs'
 
 import multer from 'multer'
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, './images/');
+    const path = `./images/`
+    fs.mkdirSync(path, { recursive: true });
+    return cb(null, path);
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
