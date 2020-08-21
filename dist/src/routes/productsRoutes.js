@@ -12,6 +12,8 @@ var _productControllers = _interopRequireDefault(require("../controllers/product
 
 var _productApiSchema = _interopRequireDefault(require("../apiSchemas/productApiSchema"));
 
+var _fs = _interopRequireDefault(require("fs"));
+
 var _multer = _interopRequireDefault(require("multer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -20,7 +22,13 @@ var router = _express["default"].Router();
 
 var storage = _multer["default"].diskStorage({
   destination: function destination(req, file, cb) {
-    cb(null, './images/');
+    var path = "./images/";
+
+    _fs["default"].mkdirSync(path, {
+      recursive: true
+    });
+
+    return cb(null, path);
   },
   filename: function filename(req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);

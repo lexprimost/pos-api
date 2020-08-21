@@ -22,9 +22,9 @@
     "prod": "NODE_ENV=production npm-run-all build server",
     "transpileServer": "babel ./server.js --out-dir dist",
     "transpileSrc": "babel ./src --out-dir dist/src ",
-    "transpileUploads": "babel ./images --out-dir dist ",
+
     "clean": "rimraf dist",
-    "build": "npm-run-all clean transpileSrc transpileUploads transpileServer",
+    "build": "npm-run-all clean transpileSrc transpileServer",
     "watch:dev": "nodemon"
   },
   "author": "Primael Oswald Lebrun",
@@ -41,6 +41,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "joi": "^17.2.0",
     "mongoose": "^5.9.28",
     "mongoose-slug-generator": "^1.0.4",
